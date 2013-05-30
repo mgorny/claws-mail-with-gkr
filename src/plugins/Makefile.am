@@ -12,6 +12,7 @@ SUBDIRS = \
 	fetchinfo \
 	gdata \
 	geolocation \
+	gnome-keyring \
 	mailmbox \
 	newmail \
 	notification \

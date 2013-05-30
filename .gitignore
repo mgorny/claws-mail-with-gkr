@@ -306,6 +306,13 @@
 /src/plugins/geolocation/Makefile
 /src/plugins/geolocation/Makefile.in
 /src/plugins/geolocation/*.o
+/src/plugins/gnome-keyring/.deps
+/src/plugins/gnome-keyring/*.la
+/src/plugins/gnome-keyring/.libs
+/src/plugins/gnome-keyring/*.lo
+/src/plugins/gnome-keyring/Makefile
+/src/plugins/gnome-keyring/Makefile.in
+/src/plugins/gnome-keyring/*.o
 /src/plugins/mailmbox/.deps
 /src/plugins/mailmbox/*.la
 /src/plugins/mailmbox/.libs
