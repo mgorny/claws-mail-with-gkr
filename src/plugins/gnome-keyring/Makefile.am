@@ -74,4 +74,6 @@ gnome_keyring_la_CPPFLAGS = \
 	$(GTK_CFLAGS) \
 	$(GNOME_KEYRING_CFLAGS)
 
-gnome_keyring_la_SOURCES =
+gnome_keyring_la_SOURCES = \
+	gnome_keyring_plugin.c \
+	gkr-if.c gkr-if.h
