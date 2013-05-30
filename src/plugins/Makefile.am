@@ -16,6 +16,7 @@ SUBDIRS = \
 	fancy \
 	fetchinfo \
 	gdata \
+	gnome-keyring \
 	libravatar \
 	mailmbox \
 	managesieve \

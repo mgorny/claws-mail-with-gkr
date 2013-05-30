@@ -971,6 +971,10 @@ AC_ARG_ENABLE(gdata-plugin,
 		[  --disable-gdata-plugin          Do not build gdata plugin],
 		[enable_gdata_plugin=$enableval], [enable_gdata_plugin=auto])
 
+AC_ARG_ENABLE(gnome-keyring-plugin,
+		[  --disable-gnome-keyring-plugin    Do not build gnome-keyring plugin],
+		[enable_gnome_keyring_plugin=$enableval], [enable_gnome_keyring_plugin=auto])
+
 AC_ARG_ENABLE(libravatar-plugin,
 		[  --disable-libravatar-plugin     Do not build libravatar  plugin],
 		[enable_libravatar_plugin=$enableval], [enable_libravatar_plugin=auto])
@@ -1055,6 +1059,7 @@ dnl either yes or no, and do the AC_SUBST calls.
 dnl Archive:		libarchive
 dnl Fancy:		Webkit, curl, optionally libsoup-gnome
 dnl Gdata:		libgdata
+dnl Gnome-Keyring	libgnome-keyring
 dnl Libravatar:		libcurl
 dnl Notification:	optionally libnotify libindicate libcanberra_gtk hotkey
 dnl Pdf-Viewer:		libpoppler
@@ -1295,6 +1300,11 @@ PKG_CHECK_MODULES(CHAMPLAIN, [$CHAMPLAIN_MODULE >= $CHAMPLAIN_VERSION clutter-gt
 AC_SUBST(CHAMPLAIN_CFLAGS)
 AC_SUBST(CHAMPLAIN_LIBS)
 
+dnl libgnome-keyring ***********************************************************
+PKG_CHECK_MODULES([GNOME_KEYRING], [gnome-keyring-1], HAVE_GNOME_KEYRING=yes, HAVE_GNOME_KEYRING=no)
+AC_SUBST(GNOME_KEYRING_CFLAGS)
+AC_SUBST(GNOME_KEYRING_LIBS)
+
 dnl Third, we now cross the requested plugins and the available dependencies
 dnl If some dependencies are missing and the plugin was explicitely enabled,
 dnl we error out, else we only inform.
@@ -1455,6 +1465,31 @@ if test x"$enable_gdata_plugin" != xno; then
 	fi
 else
 	DISABLED_PLUGINS="$DISABLED_PLUGINS gdata"
+	AC_MSG_RESULT(no)
+fi
+
+AC_MSG_CHECKING([whether to build gnome-keyring plugin])
+if test x"$enable_gnome_keyring_plugin" != xno; then
+	dependencies_missing=""
+
+	if test x"$HAVE_GNOME_KEYRING" = xno; then
+		dependencies_missing="libgnome-keyring $dependencies_missing"
+	fi
+
+	if test x"$dependencies_missing" = x; then
+		PLUGINS="$PLUGINS gnome-keyring"
+		AC_MSG_RESULT(yes)
+	elif test x"$enable_gnome_keyring_plugin" = xauto; then
+		AC_MSG_RESULT(no)
+		AC_MSG_WARN("Plugin gnome-keyring will not be built; missing $dependencies_missing")
+		enable_gnome_keyring_plugin=no
+		MISSING_DEPS_PLUGINS="$MISSING_DEPS_PLUGINS gnome-keyring"
+	else
+		AC_MSG_RESULT(no)
+		AC_MSG_ERROR("Plugin gnome-keyring cannot be built; missing $dependencies_missing")
+	fi
+else
+	DISABLED_PLUGINS="$DISABLED_PLUGINS gnome-keyring"
 	AC_MSG_RESULT(no)
 fi
 
@@ -1851,6 +1886,7 @@ AM_CONDITIONAL(BUILD_DEMO_PLUGIN,		test x"$enable_demo_plugin" != xno)
 AM_CONDITIONAL(BUILD_FANCY_PLUGIN,		test x"$enable_fancy_plugin" != xno)
 AM_CONDITIONAL(BUILD_FETCHINFO_PLUGIN,		test x"$enable_fetchinfo_plugin" != xno)
 AM_CONDITIONAL(BUILD_GDATA_PLUGIN,		test x"$enable_gdata_plugin" != xno)
+AM_CONDITIONAL(BUILD_GNOME_KEYRING_PLUGIN,	test x"$enable_gnome_keyring_plugin" != xno)
 AM_CONDITIONAL(BUILD_LIBRAVATAR_PLUGIN,		test x"$enable_libravatar_plugin" != xno)
 AM_CONDITIONAL(BUILD_MAILMBOX_PLUGIN,		test x"$enable_mailmbox_plugin" != xno)
 AM_CONDITIONAL(BUILD_MANAGESIEVE_PLUGIN,		test x"$enable_managesieve_plugin" != xno)
@@ -1899,6 +1935,7 @@ src/plugins/demo/Makefile
 src/plugins/fancy/Makefile
 src/plugins/fetchinfo/Makefile
 src/plugins/gdata/Makefile
+src/plugins/gnome-keyring/Makefile
 src/plugins/libravatar/Makefile
 src/plugins/mailmbox/Makefile
 src/plugins/managesieve/Makefile
