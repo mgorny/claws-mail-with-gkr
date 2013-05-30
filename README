@@ -142,6 +142,10 @@ All plugin preferences can be found under
     Tab-address completion on compose window, using the GData library.
     Gdata library is available from https://live.gnome.org/libgdata/.
 
+  o Gnome-Keyring
+    Obtains passwords for e-mail accounts from gnome-keyring. 
+    Gnome-Keyring is available from http://live.gnome.org/GnomeKeyring.
+
   o MailMbox
     Handles mailboxes in Mbox format using the libEtPan! library. Mbox 
     files can be added to the folder tree and used like regular mailboxes.
