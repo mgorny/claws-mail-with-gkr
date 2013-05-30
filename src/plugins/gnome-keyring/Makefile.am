@@ -4,8 +4,9 @@ if BUILD_GNOME_KEYRING_PLUGIN
 plugin_LTLIBRARIES = gnome-keyring.la
 endif
 
-gnome_keyring_la_SOURCES =
-#	gnome_keyring_plugin.c
+gnome_keyring_la_SOURCES = \
+	gnome_keyring_plugin.c \
+	gkr-if.c gkr-if.h
 
 gnome_keyring_la_LDFLAGS = \
 	-avoid-version -module
