@@ -144,6 +144,10 @@ All plugin preferences can be found under
     Displays sender avatars from https://www.libravatar.org/, from own
     sender's domain if enabled or even an automatically generated one.
 
+  o Gnome-Keyring
+    Obtains passwords for e-mail accounts from gnome-keyring. 
+    Gnome-Keyring is available from http://live.gnome.org/GnomeKeyring.
+
   o MailMbox
     Handles mailboxes in Mbox format using the libEtPan! library. Mbox 
     files can be added to the folder tree and used like regular mailboxes.
